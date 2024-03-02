@@ -12,9 +12,24 @@
     "deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.344.0",
     "next": "14.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^5.0.1",
+    "rehype-react": "^8.0.0",
+    "remark-extract-frontmatter": "^3.2.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-link-rewrite": "^1.0.7",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.0",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss-animate": "^1.0.7",
+    "unified": "^11.0.4",
+    "yaml": "^2.4.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.9.0",

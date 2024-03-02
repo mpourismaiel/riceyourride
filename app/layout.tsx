@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lexend } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Lexend({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased dark",
+          font.className
+        )}
+      >
+        <div className="nav">
+          <div className="container py-4">
+            <h1 className="text-3xl font-bold mb-2">Rice Your Ride!</h1>
+            <p className="text-secondary-foreground">
+              We pick what we think are the best rices for your inspiration!{" "}
+              <span className="text-secondary-foreground/50">(WIP)</span>
+            </p>
+          </div>
+        </div>
+        <div className="body container mx-auto">{children}</div>
+      </body>
     </html>
   );
 }
