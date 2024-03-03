@@ -1,6 +1,12 @@
+import { PageTitle } from "@/lib/site";
+import Head from "next/head";
+
 export default function NotFound() {
   return (
     <>
+      <Head>
+        <title>{PageTitle("Not Found!")}</title>
+      </Head>
       <title>404: This page could not be found.</title>
       <div style={styles.error}>
         <div>

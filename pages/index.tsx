@@ -5,6 +5,8 @@ import { PickAPI, Program } from "@/types/data";
 import Link from "next/link";
 import { SSGProps } from "@/types/next";
 import { getAllProgramsData } from "@/lib/programs";
+import Head from "next/head";
+import { PageTitle } from "@/lib/site";
 
 export const getStaticProps = (): SSGProps<{
   picks: PickAPI[];
@@ -28,6 +30,9 @@ const Home = ({
 }) => {
   return (
     <main>
+      <Head>
+        <title>{PageTitle("Home")}</title>
+      </Head>
       <div className="flex gap-2 items-center mb-4 mt-8">
         <h1 className="text-2xl font-bold text-foreground">Latest Picks</h1>
         <Link href="/best/1" className="text-foreground text-3xl">

@@ -6,6 +6,8 @@ import { getAllProgramsByCategory, getProgram } from "@/lib/programs";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { markdownToJsx } from "@/lib/markdown";
+import Head from "next/head";
+import { PageTitle } from "@/lib/site";
 
 type RiceByWmParams = {
   page: string;
@@ -43,24 +45,30 @@ export const getStaticPaths = async (): Promise<
 export const getStaticProps = ({
   params: { wm, page },
 }: SSGParams<RiceByWmParams>): SSGProps<{
+  page: string;
   picks: PickAPI[];
   wmTitle: string;
 }> => {
   const wmTitle = (markdownToJsx().processSync(getProgram(wm)).data as Program)
     .title;
   const picks = getRiceForPage(getAllRicesByWm(wm), page, PAGE_SIZE);
-  return { props: { picks, wmTitle } };
+  return { props: { page, picks, wmTitle } };
 };
 
 export default function Best({
+  page,
   picks,
   wmTitle,
 }: {
+  page: string;
   picks: PickAPI[];
   wmTitle: string;
 }) {
   return (
     <main>
+      <Head>
+        <title>{PageTitle(`Rices using ${wmTitle} - Page ${page}`)}</title>
+      </Head>
       <div className="flex gap-2 items-center mb-4 mt-8">
         <Link href="/best/1" className="text-foreground text-3xl">
           <HiOutlineChevronLeft />

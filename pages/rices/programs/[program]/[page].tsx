@@ -11,6 +11,8 @@ import { getAllProgramsByCategory, getProgram } from "@/lib/programs";
 import Link from "next/link";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { markdownToJsx } from "@/lib/markdown";
+import Head from "next/head";
+import { PageTitle } from "@/lib/site";
 
 type RiceByProgramParams = {
   page: string;
@@ -49,6 +51,7 @@ export const getStaticPaths = async (): Promise<
 export const getStaticProps = ({
   params: { program, page },
 }: SSGParams<RiceByProgramParams>): SSGProps<{
+  page: string;
   picks: PickAPI[];
   programTitle: string;
 }> => {
@@ -60,18 +63,23 @@ export const getStaticProps = ({
     page,
     PAGE_SIZE
   );
-  return { props: { picks, programTitle } };
+  return { props: { page, picks, programTitle } };
 };
 
 export default function Best({
+  page,
   picks,
   programTitle,
 }: {
+  page: string;
   picks: PickAPI[];
   programTitle: string;
 }) {
   return (
     <main>
+      <Head>
+        <title>{PageTitle(`Rices using ${programTitle} - Page ${page}`)}</title>
+      </Head>
       <div className="flex gap-2 items-center mb-4 mt-8">
         <Link href="/best/1" className="text-foreground text-3xl">
           <HiOutlineChevronLeft />

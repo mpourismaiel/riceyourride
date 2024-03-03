@@ -21,6 +21,8 @@ import { PickAPI, Program } from "@/types/data";
 import { SSGParams, SSGProps, StaticPathsReturn } from "@/types/next";
 import { markdownToJsx } from "@/lib/markdown";
 import { getAllPrograms, getProgram } from "@/lib/programs";
+import Head from "next/head";
+import { PageTitle } from "@/lib/site";
 
 type RicePickParams = {
   page: string;
@@ -45,6 +47,7 @@ export const getStaticPaths = async (): Promise<
 export const getStaticProps = ({
   params: { page },
 }: SSGParams<RicePickParams>): SSGProps<{
+  page: string;
   picks: PickAPI[];
   programs: (Program & { filename: string })[];
   wms: (Program & { filename: string })[];
@@ -74,14 +77,16 @@ export const getStaticProps = ({
       },
       { programs: [], wms: [] }
     );
-  return { props: { picks, programs, wms } };
+  return { props: { page, picks, programs, wms } };
 };
 
 export default function Best({
+  page,
   picks,
   programs,
   wms,
 }: {
+  page: string;
   picks: PickAPI[];
   programs: (Program & { filename: string })[];
   wms: (Program & { filename: string })[];
@@ -106,6 +111,9 @@ export default function Best({
 
   return (
     <main>
+      <Head>
+        <title>{PageTitle(`Best Rices - Page ${page}`)}</title>
+      </Head>
       <div className="flex gap-2 justify-between items-center mb-4 mt-8">
         <h1 className="text-2xl font-bold text-foreground">Best Picks</h1>
         <div className="flex items-center gap-2">

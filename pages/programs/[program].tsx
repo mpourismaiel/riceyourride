@@ -5,6 +5,8 @@ import { Link, Program } from "@/types/data";
 import { getAllPrograms, getProgram } from "@/lib/programs";
 import { markdownToJsx } from "@/lib/markdown";
 import { default as NextLink } from "next/link";
+import Head from "next/head";
+import { PageTitle } from "@/lib/site";
 
 type ProgramParams = {
   program: string;
@@ -50,6 +52,9 @@ export default function Program(
 
   return (
     <div className="bg-card p-4 rounded shadow">
+      <Head>
+        <title>{PageTitle(data.title)}</title>
+      </Head>
       <h1 className="text-xl font-bold text-foreground mb-2">{data.title}</h1>
       <div className="flex gap-2 items-center">
         <a
