@@ -1,5 +1,6 @@
 ---
 title: SWWW
+categories: [wallpaper]
 created_at: 2024-03-02
 updated_at: 2024-03-02
 ---

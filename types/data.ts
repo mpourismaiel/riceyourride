@@ -17,4 +17,11 @@ export type PickAPI = Omit<Pick, "wm" | "programs"> & {
   programs: { url: string; title: string }[];
 };
 
+export type Program = {
+  title: string;
+  categories: string[];
+  created_at: string;
+  updated_at: string;
+};
+
 export type Link = Record<string, string>;

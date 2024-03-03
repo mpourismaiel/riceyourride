@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { Lexend } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const font = Lexend({ subsets: ["latin"] });
 
@@ -15,9 +16,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     >
       <div className="nav">
         <div className="container py-4">
-          <h1 className="text-3xl font-bold mb-2 text-foreground">
-            Rice Your Ride!
-          </h1>
+          <Link href="/">
+            <h1 className="text-3xl font-bold mb-2 text-foreground">
+              Rice Your Ride!
+            </h1>
+          </Link>
           <p className="text-secondary-foreground">
             We pick what we think are the best rices for your inspiration!{" "}
             <span className="text-secondary-foreground/50">(WIP)</span>

@@ -2,6 +2,7 @@ import { PiGithubLogoFill, PiRedditLogoFill } from "react-icons/pi";
 import Image from "next/image";
 
 import { PickAPI } from "@/types/data";
+import Link from "next/link";
 
 type RicePickProps = {
   pick: PickAPI;
@@ -11,13 +12,12 @@ const RicePick = ({ pick }: RicePickProps) => {
   return (
     <article className="bg-card p-4 rounded shadow">
       <div className="rice-details flex gap-4 items-center">
-        <a
-          target="_blank"
+        <Link
           href={pick.wm.url}
           className="rice-wm text-xs text-primary-foreground hover:underline bg-primary rounded p-1"
         >
           {`[${pick.wm.title}]`}
-        </a>
+        </Link>
         <div className="rice-creator flex gap-4">
           <a
             target="_blank"
@@ -50,14 +50,13 @@ const RicePick = ({ pick }: RicePickProps) => {
       </div>
       <div className="rice-programs space-x-2 mb-2">
         {pick.programs.map((program) => (
-          <a
-            target="_blank"
+          <Link
             href={program.url}
             key={`${pick.id}-${program.title}`}
             className="text-xs bg-secondary py-1 px-2 rounded text-primary-foreground"
           >
             {program.title}
-          </a>
+          </Link>
         ))}
       </div>
       <a target="_blank" href={pick.post_url}>
