@@ -48,17 +48,19 @@ const RicePick = ({ pick }: RicePickProps) => {
           />
         ))}
       </div>
-      <div className="rice-programs space-x-2 mb-2">
-        {pick.programs.map((program) => (
-          <Link
-            href={program.url}
-            key={`${pick.id}-${program.title}`}
-            className="text-xs bg-secondary py-1 px-2 rounded text-primary-foreground"
-          >
-            {program.title}
-          </Link>
-        ))}
-      </div>
+      {pick.programs.length ? (
+        <div className="rice-programs space-x-2 mb-2">
+          {pick.programs.map((program) => (
+            <Link
+              href={program.url}
+              key={`${pick.id}-${program.title}`}
+              className="text-xs bg-secondary py-1 px-2 rounded text-primary-foreground"
+            >
+              {program.title}
+            </Link>
+          ))}
+        </div>
+      ) : null}
       <a target="_blank" href={pick.post_url}>
         <h2 className="rice-title text-xl font-bold text-card-foreground hover:underline block">
           {pick.title}

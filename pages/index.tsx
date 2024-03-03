@@ -1,6 +1,6 @@
 import { HiOutlineChevronRight } from "react-icons/hi";
 import RicePick from "@/components/rice-pick";
-import { getRiceForPage } from "@/lib/rices";
+import { getAllRices, getRiceForPage } from "@/lib/rices";
 import { PickAPI, Program } from "@/types/data";
 import Link from "next/link";
 import { SSGProps } from "@/types/next";
@@ -10,7 +10,7 @@ export const getStaticProps = (): SSGProps<{
   picks: PickAPI[];
   programs: (Program & { filename: string })[];
 }> => {
-  const picks = getRiceForPage("1", 4);
+  const picks = getRiceForPage(getAllRices(), "1", 4);
   const programsData = getAllProgramsData();
   const programs = Object.keys(programsData).map((filename) => ({
     filename: filename.replace(/\.md$/, ""),
