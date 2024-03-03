@@ -1,18 +1,14 @@
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import Head from "next/head";
+import Link from "next/link";
+
 import RicePick from "@/components/rice-pick";
+import { getAllRicesByPrograms, getRiceForPage } from "@/lib/rices";
+import { getAllPrograms, getProgram } from "@/lib/programs";
+import { markdownToJsx } from "@/lib/markdown";
+import { PageTitle } from "@/lib/site";
 import { PickAPI, Program } from "@/types/data";
 import { SSGParams, SSGProps, StaticPathsReturn } from "@/types/next";
-import {
-  getAllRices,
-  getAllRicesByPrograms,
-  getAllRicesByWm,
-  getRiceForPage,
-} from "@/lib/rices";
-import { getAllProgramsByCategory, getProgram } from "@/lib/programs";
-import Link from "next/link";
-import { HiOutlineChevronLeft } from "react-icons/hi";
-import { markdownToJsx } from "@/lib/markdown";
-import Head from "next/head";
-import { PageTitle } from "@/lib/site";
 
 type RiceByProgramParams = {
   page: string;
@@ -24,12 +20,9 @@ const PAGE_SIZE = 10;
 export const getStaticPaths = async (): Promise<
   StaticPathsReturn<RiceByProgramParams>
 > => {
-  const allPrograms = getAllProgramsByCategory(
-    ["window-manager", "compositor", "desktop-environment"],
-    true
-  );
+  const allPrograms = getAllPrograms();
   const paths = allPrograms
-    .map(({ filename }) => ({
+    .map((filename) => ({
       program: filename,
       totalPages: Math.ceil(
         getAllRicesByPrograms([filename]).length / PAGE_SIZE

@@ -45,17 +45,13 @@ const formatRice = (rice: Pick): PickAPI => ({
   }),
 });
 
-export const getAllRicesByWm = (wm: string): Pick[] => {
-  return getAllRices()
-    .sort(sortRices)
-    .filter((pick) => pick.wm === wm);
-};
-
 export const getAllRicesByPrograms = (programs: string[]): Pick[] => {
   return getAllRices()
     .sort(sortRices)
     .filter((pick) =>
-      programs.every((program) => pick.programs.includes(program))
+      programs.every(
+        (program) => pick.wm === program || pick.programs.includes(program)
+      )
     );
 };
 

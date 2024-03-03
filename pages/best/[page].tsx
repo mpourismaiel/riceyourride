@@ -50,64 +50,35 @@ export const getStaticProps = ({
   page: string;
   picks: PickAPI[];
   programs: (Program & { filename: string })[];
-  wms: (Program & { filename: string })[];
 }> => {
   const picks = getRiceForPage(getAllRices(), page, PAGE_SIZE);
-  const wmCategories = ["window-manager", "compositor", "desktop-environment"];
-  const { programs, wms } = getAllPrograms()
-    .map((filename) => {
-      const program = filename.replace(/\.md$/, "");
-      const content = getProgram(program);
-      const data = markdownToJsx().processSync(content).data as Program;
-      return { ...data, filename: program };
-    })
-    .reduce<{
-      programs: (Program & { filename: string })[];
-      wms: (Program & { filename: string })[];
-    }>(
-      (acc, program: Program & { filename: string }) => {
-        if (
-          wmCategories.some((category) => program.categories.includes(category))
-        ) {
-          acc.wms.push(program);
-        } else {
-          acc.programs.push(program);
-        }
-        return acc;
-      },
-      { programs: [], wms: [] }
-    );
-  return { props: { page, picks, programs, wms } };
+  const programs = getAllPrograms().map((filename) => {
+    const program = filename.replace(/\.md$/, "");
+    const content = getProgram(program);
+    const data = markdownToJsx().processSync(content).data as Program;
+    return { ...data, filename: program };
+  });
+  return { props: { page, picks, programs } };
 };
 
 export default function Best({
   page,
   picks,
   programs,
-  wms,
 }: {
   page: string;
   picks: PickAPI[];
   programs: (Program & { filename: string })[];
-  wms: (Program & { filename: string })[];
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [wmsOpen, setWmsOpen] = useState(false);
   const [value, setValue] = useState("");
-  const [wmValue, setWmValue] = useState("");
 
   useEffect(() => {
     if (value) {
       router.push(`/rices/programs/${value}/1`);
     }
   }, [value, router]);
-
-  useEffect(() => {
-    if (wmValue) {
-      router.push(`/rices/wm/${wmValue}/1`);
-    }
-  }, [wmValue, router]);
 
   return (
     <main>
@@ -141,9 +112,13 @@ export default function Best({
                   {programs.map((program) => (
                     <CommandItem
                       key={program.filename}
-                      value={program.filename}
+                      value={
+                        program.filename + " " + program.categories.join(" ")
+                      }
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
+                        setValue(
+                          program.filename === value ? "" : program.filename
+                        );
                         setOpen(false);
                       }}
                     >
@@ -151,49 +126,6 @@ export default function Best({
                         <span>{program.title}</span>
                         <span className="text-muted-foreground text-xs">
                           {program.categories.join(", ")}
-                        </span>
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
-          <Popover open={wmsOpen} onOpenChange={setWmsOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="secondary"
-                role="combobox"
-                aria-expanded={wmsOpen}
-                size="sm"
-                className="w-[300px] justify-between"
-              >
-                {wmValue
-                  ? wms.find((wm) => wm.filename === wmValue)?.title
-                  : "Search by compositor/window manager..."}
-                <HiChevronUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0">
-              <Command>
-                <CommandInput placeholder="Search compositors/window managers..." />
-                <CommandEmpty>No copsitor/window manager found.</CommandEmpty>
-                <CommandGroup>
-                  {wms.map((wm) => (
-                    <CommandItem
-                      key={wm.filename}
-                      value={wm.filename}
-                      onSelect={(currentValue) => {
-                        setWmValue(
-                          currentValue === wmValue ? "" : currentValue
-                        );
-                        setOpen(false);
-                      }}
-                    >
-                      <div className="flex flex-col">
-                        <span>{wm.title}</span>
-                        <span className="text-muted-foreground text-xs">
-                          {wm.categories.join(", ")}
                         </span>
                       </div>
                     </CommandItem>
