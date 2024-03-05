@@ -30,7 +30,9 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
             className="text-xs text-secondary-foreground/50 hover:underline flex gap-2 items-center"
           >
             <PiRedditLogoFill />
-            {pick.reddit_username}
+            <span className="hidden sm:inline-block">
+              {pick.reddit_username}
+            </span>
           </a>
           <a
             target="_blank"
@@ -38,7 +40,9 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
             className="text-xs text-secondary-foreground/50 hover:underline flex gap-2 items-center"
           >
             <PiGithubLogoFill />
-            {pick.github_username}
+            <span className="hidden sm:inline-block">
+              {pick.github_username}
+            </span>
           </a>
         </div>
       </div>
