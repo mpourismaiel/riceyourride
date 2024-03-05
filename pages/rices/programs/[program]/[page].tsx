@@ -1,6 +1,4 @@
-import { HiOutlineChevronLeft } from "react-icons/hi";
 import Head from "next/head";
-import Link from "next/link";
 
 import RicePick from "@/components/rice-pick";
 import { getAllRicesByPrograms, getRiceForPage } from "@/lib/rices";
@@ -9,10 +7,18 @@ import { markdownToJsx } from "@/lib/markdown";
 import { PageTitle } from "@/lib/site";
 import { PickAPI, Program } from "@/types/data";
 import { SSGParams, SSGProps, StaticPathsReturn } from "@/types/next";
+import PageHeader from "@/components/page-header";
+import RiceShowcase from "@/components/rice-showcase";
 
 type RiceByProgramParams = {
   page: string;
   program: string;
+};
+
+type RicesByProgramInPage = {
+  page: string;
+  picks: PickAPI[];
+  programTitle: string;
 };
 
 const PAGE_SIZE = 10;
@@ -20,12 +26,12 @@ const PAGE_SIZE = 10;
 export const getStaticPaths = async (): Promise<
   StaticPathsReturn<RiceByProgramParams>
 > => {
-  const allPrograms = getAllPrograms();
-  const paths = allPrograms
+  const paths = getAllPrograms()
     .map((filename) => ({
-      program: filename,
+      program: filename.replace(/\.md$/, ""),
       totalPages: Math.ceil(
-        getAllRicesByPrograms([filename]).length / PAGE_SIZE
+        getAllRicesByPrograms([filename.replace(/\.md$/, "")]).length /
+          PAGE_SIZE
       ),
     }))
     .map(({ program, totalPages }) =>
@@ -43,11 +49,7 @@ export const getStaticPaths = async (): Promise<
 
 export const getStaticProps = ({
   params: { program, page },
-}: SSGParams<RiceByProgramParams>): SSGProps<{
-  page: string;
-  picks: PickAPI[];
-  programTitle: string;
-}> => {
+}: SSGParams<RiceByProgramParams>): SSGProps<RicesByProgramInPage> => {
   const programTitle = (
     markdownToJsx().processSync(getProgram(program)).data as Program
   ).title;
@@ -59,31 +61,18 @@ export const getStaticProps = ({
   return { props: { page, picks, programTitle } };
 };
 
-export default function Best({
+export default function RicesByProgramInPage({
   page,
   picks,
   programTitle,
-}: {
-  page: string;
-  picks: PickAPI[];
-  programTitle: string;
-}) {
+}: RicesByProgramInPage) {
   return (
     <main>
       <Head>
         <title>{PageTitle(`Rices using ${programTitle} - Page ${page}`)}</title>
       </Head>
-      <div className="flex gap-2 items-center mb-4 mt-8">
-        <Link href="/best/1" className="text-foreground text-3xl">
-          <HiOutlineChevronLeft />
-        </Link>
-        <h1 className="text-2xl font-bold text-foreground">{`Picks using ${programTitle}`}</h1>
-      </div>
-      <div className="grid grid-cols-4 gap-4 mt-8">
-        {picks.map((pick) => (
-          <RicePick key={pick.id} pick={pick} />
-        ))}
-      </div>
+      <PageHeader title={`Picks using ${programTitle}`} shouldGoBack />
+      <RiceShowcase rices={picks} />
     </main>
   );
 }

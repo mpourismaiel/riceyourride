@@ -24,4 +24,6 @@ export type Program = {
   updated_at: string;
 };
 
+export type ProgramWithFilename = Program & { filename: string };
+
 export type Link = Record<string, string>;

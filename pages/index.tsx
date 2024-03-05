@@ -1,23 +1,22 @@
-import { HiOutlineChevronRight } from "react-icons/hi";
+import Link from "next/link";
+import Head from "next/head";
+
 import RicePick from "@/components/rice-pick";
 import { getAllRices, getRiceForPage } from "@/lib/rices";
-import { PickAPI, Program } from "@/types/data";
-import Link from "next/link";
+import { PickAPI, ProgramWithFilename } from "@/types/data";
 import { SSGProps } from "@/types/next";
-import { getAllProgramsData } from "@/lib/programs";
-import Head from "next/head";
+import { getAllProgramsDataWithFilename } from "@/lib/programs";
 import { PageTitle } from "@/lib/site";
+import Search from "@/components/search";
+import PageHeader from "@/components/page-header";
+import RiceShowcase from "@/components/rice-showcase";
 
 export const getStaticProps = (): SSGProps<{
   picks: PickAPI[];
-  programs: (Program & { filename: string })[];
+  programs: ProgramWithFilename[];
 }> => {
   const picks = getRiceForPage(getAllRices(), "1", 4);
-  const programsData = getAllProgramsData();
-  const programs = Object.keys(programsData).map((filename) => ({
-    filename: filename.replace(/\.md$/, ""),
-    ...programsData[filename],
-  }));
+  const programs = getAllProgramsDataWithFilename();
   return { props: { picks, programs } };
 };
 
@@ -26,28 +25,21 @@ const Home = ({
   programs,
 }: {
   picks: PickAPI[];
-  programs: (Program & { filename: string })[];
+  programs: ProgramWithFilename[];
 }) => {
   return (
     <main>
       <Head>
         <title>{PageTitle("Home")}</title>
       </Head>
-      <div className="flex gap-2 items-center mb-4 mt-8">
-        <h1 className="text-2xl font-bold text-foreground">Latest Picks</h1>
-        <Link href="/best/1" className="text-foreground text-3xl">
-          <HiOutlineChevronRight />
-        </Link>
-      </div>
-      <div className="grid grid-cols-4 gap-4">
-        {picks.map((pick) => (
-          <RicePick key={pick.id} pick={pick} />
-        ))}
-      </div>
+      <PageHeader title="Best Rices!" link="/best/1">
+        <Search programs={programs} />
+      </PageHeader>
+      <RiceShowcase rices={picks} limit={3} />
       <div className="flex gap-2 items-center mt-8 mb-4">
         <h1 className="text-2xl font-bold text-foreground">All Programs</h1>
       </div>
-      <div className="flex flex-wrap gap-2 items-center">
+      <div className="flex flex-wrap gap-2 items-center pb-4">
         {programs.map((program) => (
           <Link
             href={`/programs/${program.filename}`}

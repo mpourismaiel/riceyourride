@@ -4,14 +4,8 @@ import path from "path";
 import { Pick, PickAPI } from "@/types/data";
 import { markdownToJsx } from "./markdown";
 
-let allRices: Pick[] = [];
-
 export const getAllRices = (): Pick[] => {
-  if (allRices.length) {
-    return allRices;
-  }
-
-  allRices = fs
+  const allRices: Pick[] = fs
     .readdirSync(path.join(process.cwd(), "data", "rices"))
     .map((filename) => {
       const content = fs.readFileSync(
@@ -45,15 +39,14 @@ const formatRice = (rice: Pick): PickAPI => ({
   }),
 });
 
-export const getAllRicesByPrograms = (programs: string[]): Pick[] => {
-  return getAllRices()
+export const getAllRicesByPrograms = (programs: string[]): Pick[] =>
+  getAllRices()
     .sort(sortRices)
     .filter((pick) =>
       programs.every(
         (program) => pick.wm === program || pick.programs.includes(program)
       )
     );
-};
 
 export const getRiceForPage = (
   rices: Pick[],

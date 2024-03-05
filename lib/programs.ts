@@ -1,33 +1,34 @@
 import fs from "fs";
 import path from "path";
 import { markdownToJsx } from "./markdown";
-import { Program } from "@/types/data";
-
-let allPrograms: Record<string, Program> = {};
+import { Program, ProgramWithFilename } from "@/types/data";
 
 export const getAllPrograms = (): string[] =>
   fs.readdirSync(path.join(process.cwd(), "data", "programs"));
 
-export const getAllProgramsData = (): Record<string, Program> => {
-  if (allPrograms.length) {
-    return allPrograms;
-  }
-
-  allPrograms = getAllPrograms().reduce<Record<string, Program>>(
-    (acc, filename) => {
-      acc[filename] = markdownToJsx().processSync(
-        getProgram(filename.replace(/\.md$/, ""))
-      ).data as Program;
-      return acc;
-    },
-    {}
-  );
+export const getAllProgramsDataObj = (): Record<string, Program> => {
+  const allPrograms: Record<string, Program> = getAllPrograms().reduce<
+    Record<string, Program>
+  >((acc, filename) => {
+    acc[filename] = markdownToJsx().processSync(
+      getProgram(filename.replace(/\.md$/, ""))
+    ).data as Program;
+    return acc;
+  }, {});
 
   return allPrograms;
 };
 
+export const getAllProgramsDataWithFilename = (): ProgramWithFilename[] =>
+  getAllPrograms().map((filename) => {
+    const program = filename.replace(/\.md$/, "");
+    const content = getProgram(program);
+    const data = markdownToJsx().processSync(content).data as Program;
+    return { ...data, filename: program };
+  });
+
 export const getAllProgramCategories = (): string[] => {
-  const programs = getAllProgramsData();
+  const programs = getAllProgramsDataObj();
   return Object.keys(programs)
     .map((filename) => programs[filename].categories)
     .flat()
@@ -38,8 +39,8 @@ export const getAllProgramsByCategory = (
   categories: string[] = [],
   excludeMode: boolean = false,
   exclusive: boolean = false
-): (Program & { filename: string })[] => {
-  const programs = getAllProgramsData();
+): ProgramWithFilename[] => {
+  const programs = getAllProgramsDataObj();
   const withFileName = Object.keys(programs).map((filename) => ({
     filename: filename.replace(/\.md$/, ""),
     ...programs[filename],

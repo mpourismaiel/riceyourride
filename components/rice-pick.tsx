@@ -6,11 +6,16 @@ import Link from "next/link";
 
 type RicePickProps = {
   pick: PickAPI;
+  isLimited?: boolean;
 };
 
-const RicePick = ({ pick }: RicePickProps) => {
+const RicePick = ({ pick, isLimited }: RicePickProps) => {
   return (
-    <article className="bg-card p-4 rounded shadow">
+    <article
+      className={`bg-card p-4 rounded shadow ${
+        isLimited ? "block xl:hidden" : ""
+      }`}
+    >
       <div className="rice-details flex gap-4 items-center">
         <Link
           href={pick.wm.url}
