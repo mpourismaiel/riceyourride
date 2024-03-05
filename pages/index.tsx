@@ -39,7 +39,7 @@ const Home = ({
       <div className="flex gap-2 items-center mt-8 mb-4">
         <h1 className="text-2xl font-bold text-foreground">All Programs</h1>
       </div>
-      <div className="flex flex-wrap gap-2 items-center pb-4">
+      <div className="flex flex-wrap gap-2 items-center">
         {programs.map((program) => (
           <Link
             href={`/programs/${program.filename}`}
