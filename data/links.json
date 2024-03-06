@@ -3,5 +3,8 @@
   "hyprland": "https://hyprland.org",
   "ags": "https://aylur.github.io/ags-docs/",
   "swww": "https://github.com/LGFae/swww",
-  "matugen": "https://github.com/InioX/matugen"
+  "matugen": "https://github.com/InioX/matugen",
+  "eww": "https://elkowar.github.io/eww",
+  "xmonad": "https://xmonad.org/",
+  "wofi": "https://hg.sr.ht/~scoopta/wofi"
 }
