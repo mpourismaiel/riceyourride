@@ -30,15 +30,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <div className="body container mx-auto">
         <Component {...pageProps} />
         <div className="flex items-center justify-center pb-4 pt-8 text-foreground">
-          Made by{" "}
-          <a href="https://github.com/mpourismaiel" className="px-1">
-            Mahdi Pourismaiel
-          </a>{" "}
-          with ❤️ and
-          <a href="https://nextjs.org" className="pl-1">
-            Next.js
-          </a>
-          , coming to you from Cosmere!
+          <p>
+            Made by{" "}
+            <a href="https://github.com/mpourismaiel" className="px-1">
+              Mahdi Pourismaiel
+            </a>{" "}
+            with ❤️ and
+            <a href="https://nextjs.org" className="pl-1">
+              Next.js
+            </a>
+            , coming to you from Cosmere!
+          </p>
         </div>
       </div>
     </div>
