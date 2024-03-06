@@ -1,12 +1,12 @@
 import fs from "fs";
 import path from "path";
 import Head from "next/head";
+import { default as NextLink } from "next/link";
 
 import { SSGParams, SSGProps, StaticPathsReturn } from "@/types/next";
 import { Link, Program } from "@/types/data";
 import { getAllPrograms, getProgram } from "@/lib/programs";
 import { markdownToJsx } from "@/lib/markdown";
-import { default as NextLink } from "next/link";
 import { PageTitle } from "@/lib/site";
 import PageHeader from "@/components/page-header";
 
@@ -31,30 +31,43 @@ export const getStaticPaths = (): StaticPathsReturn<ProgramParams> => {
 
 export const getStaticProps = ({
   params: { program },
-}: SSGParams<ProgramParams>): SSGProps<{ content: string; link: string }> => {
+}: SSGParams<ProgramParams>): SSGProps<{
+  content: string;
+  link: string;
+  program: string;
+}> => {
   const links: Link = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "data", "links.json"), "utf-8")
   );
   const content = getProgram(program);
   const link = links[program];
-  return { props: { content, link } };
+  return { props: { content, link, program } };
 };
 
 export default function Program(
   {
     content,
     link,
+    program,
   }: {
     content: string;
     link: string;
-  } = { content: "", link: "" }
+    program: string;
+  } = { content: "", link: "", program: "" }
 ) {
   const jsxMarkdown = markdownToJsx().processSync(content);
   const data = jsxMarkdown.data as Program;
 
   return (
     <>
-      <PageHeader title={data.title} shouldGoBack />
+      <PageHeader title={data.title} shouldGoBack>
+        <NextLink
+          href={`/rices/programs/${program}/1`}
+          className="text-foreground"
+        >
+          {`Find rices using ${data.title}`}
+        </NextLink>
+      </PageHeader>
       <div className="bg-card p-4 rounded shadow">
         <Head>
           <title>{PageTitle(data.title)}</title>

@@ -32,7 +32,7 @@ const Home = ({
       <Head>
         <title>{PageTitle("Home")}</title>
       </Head>
-      <PageHeader title="Best Rices!" link="/best/1">
+      <PageHeader title="Latest Rices" link="/best/1">
         <Search programs={programs} />
       </PageHeader>
       <RiceShowcase rices={picks} limit={3} />

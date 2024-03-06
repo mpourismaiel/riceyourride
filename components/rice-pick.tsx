@@ -12,10 +12,22 @@ type RicePickProps = {
 const RicePick = ({ pick, isLimited }: RicePickProps) => {
   return (
     <article
-      className={`bg-card p-4 rounded shadow ${
+      className={`bg-card flex flex-col gap-2 p-4 rounded shadow ${
         isLimited ? "block xl:hidden" : ""
       }`}
     >
+      <div className="rice-screenshot">
+        {pick.screenshots.map((screenshot) => (
+          <Image
+            key={screenshot}
+            src={screenshot}
+            width={800}
+            height={600}
+            alt={pick.title}
+            className="h-[250px] md:h-[300px] w-full object-cover transition-all ease-in-out hover:object-contain"
+          />
+        ))}
+      </div>
       <div className="rice-details flex gap-4 items-center">
         <Link
           href={pick.wm.url}
@@ -46,19 +58,13 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
           </a>
         </div>
       </div>
-      <div className="rice-screenshot my-4">
-        {pick.screenshots.map((screenshot) => (
-          <Image
-            key={screenshot}
-            src={screenshot}
-            width={800}
-            height={600}
-            alt={pick.title}
-          />
-        ))}
-      </div>
+      <a target="_blank" className="block my-1" href={pick.post_url}>
+        <h2 className="rice-title text-xl font-bold text-card-foreground hover:underline block">
+          {pick.title}
+        </h2>
+      </a>
       {pick.programs.length ? (
-        <div className="rice-programs space-x-2 mb-2">
+        <div className="rice-programs space-x-2 flex flex-1 items-end">
           {pick.programs.map((program) => (
             <Link
               href={program.url}
@@ -70,11 +76,6 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
           ))}
         </div>
       ) : null}
-      <a target="_blank" href={pick.post_url}>
-        <h2 className="rice-title text-xl font-bold text-card-foreground hover:underline block">
-          {pick.title}
-        </h2>
-      </a>
     </article>
   );
 };
