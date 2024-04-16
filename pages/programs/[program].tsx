@@ -4,7 +4,7 @@ import Head from "next/head";
 import { default as NextLink } from "next/link";
 
 import { SSGParams, SSGProps, StaticPathsReturn } from "@/types/next";
-import { Link, Program } from "@/types/data";
+import { Link, Program as ProgramType } from "@/types/data";
 import { getAllPrograms, getProgram } from "@/lib/programs";
 import { markdownToJsx } from "@/lib/markdown";
 import { PageTitle } from "@/lib/site";
@@ -56,7 +56,7 @@ export default function Program(
   } = { content: "", link: "", program: "" }
 ) {
   const jsxMarkdown = markdownToJsx().processSync(content);
-  const data = jsxMarkdown.data as Program;
+  const data = jsxMarkdown.data as ProgramType;
 
   return (
     <>
@@ -96,7 +96,9 @@ export default function Program(
             </NextLink>
           ))}
         </div>
-        <div className="prose mt-4 text-foreground">{jsxMarkdown.result}</div>
+        <div className="prose prose-invert prose-zinc max-w-none mt-4">
+          {jsxMarkdown.result}
+        </div>
       </div>
     </>
   );
