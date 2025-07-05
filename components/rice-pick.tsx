@@ -36,7 +36,7 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
           {`[${pick.wm.title}]`}
         </Link>
         <div className="rice-creator flex gap-4">
-          <a
+          {pick.reddit_username && <a
             target="_blank"
             href={`https://www.reddit.com/user/${pick.reddit_username}`}
             className="text-xs text-secondary-foreground/50 hover:underline flex gap-2 items-center"
@@ -45,8 +45,8 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
             <span className="hidden sm:inline-block">
               {pick.reddit_username}
             </span>
-          </a>
-          <a
+          </a>}
+          {pick.github_username && <a
             target="_blank"
             href={`https://www.github.com/${pick.github_username}`}
             className="text-xs text-secondary-foreground/50 hover:underline flex gap-2 items-center"
@@ -55,7 +55,7 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
             <span className="hidden sm:inline-block">
               {pick.github_username}
             </span>
-          </a>
+          </a>}
         </div>
       </div>
       <a target="_blank" className="block my-1" href={pick.post_url}>

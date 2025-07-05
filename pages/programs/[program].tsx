@@ -55,7 +55,7 @@ export default function Program(
     program: string;
   } = { content: "", link: "", program: "" }
 ) {
-  const jsxMarkdown = markdownToJsx().processSync(content);
+  const jsxMarkdown = markdownToJsx().processSync(content.replace(/\(\.link\)/g, `(${link})`));
   const data = jsxMarkdown.data as ProgramType;
 
   return (

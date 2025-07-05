@@ -16,7 +16,7 @@ const PageHeader = ({
     <div className="flex flex-col sm:flex-row gap-2 justify-between items-center mb-4 mt-8">
       <div className="flex gap-2 items-center">
         {shouldGoBack && (
-          <Link href="/best/1" className="text-foreground text-3xl">
+          <Link href="/" className="text-foreground text-3xl">
             <HiOutlineChevronLeft />
           </Link>
         )}

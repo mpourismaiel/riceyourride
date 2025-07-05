@@ -32,7 +32,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <div className="flex items-center justify-center pb-4 pt-8 text-foreground">
           <p>
             Made by{" "}
-            <a href="https://github.com/mpourismaiel" className="px-1">
+            <a href="https://mpourismaiel.com" className="px-1">
               Mahdi Pourismaiel
             </a>{" "}
             with ❤️ and

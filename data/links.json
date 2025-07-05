@@ -6,5 +6,8 @@
   "matugen": "https://github.com/InioX/matugen",
   "eww": "https://elkowar.github.io/eww",
   "xmonad": "https://xmonad.org/",
-  "wofi": "https://hg.sr.ht/~scoopta/wofi"
+  "wofi": "https://hg.sr.ht/~scoopta/wofi",
+  "quickshell": "https://quickshell.outfoxxed.me/",
+  "fabric": "https://wiki.ffpy.org/",
+  "swayfx": "https://github.com/WillPower3309/swayfx"
 }

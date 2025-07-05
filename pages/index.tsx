@@ -15,7 +15,7 @@ export const getStaticProps = (): SSGProps<{
   picks: PickAPI[];
   programs: ProgramWithFilename[];
 }> => {
-  const picks = getRiceForPage(getAllRices(), "1", 4);
+  const picks = getRiceForPage(getAllRices(), "1", 12);
   const programs = getAllProgramsDataWithFilename();
   return { props: { picks, programs } };
 };
@@ -32,12 +32,8 @@ const Home = ({
       <Head>
         <title>{PageTitle("Home")}</title>
       </Head>
-      <PageHeader title="Latest Rices" link="/best/1">
-        <Search programs={programs} />
-      </PageHeader>
-      <RiceShowcase rices={picks} limit={3} />
       <div className="flex gap-2 items-center mt-8 mb-4">
-        <h1 className="text-2xl font-bold text-foreground">All Programs</h1>
+        <h1 className="text-2xl font-bold text-foreground">Programs</h1>
       </div>
       <div className="flex flex-wrap gap-2 items-center">
         {programs.map((program) => (
@@ -50,6 +46,10 @@ const Home = ({
           </Link>
         ))}
       </div>
+      <PageHeader title="Latest Rices" link="/best/1">
+        <Search programs={programs} />
+      </PageHeader>
+      <RiceShowcase rices={picks} limit={12} />
     </main>
   );
 };
