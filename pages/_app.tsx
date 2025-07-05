@@ -29,7 +29,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </div>
       <div className="body container mx-auto">
         <Component {...pageProps} />
-        <div className="flex items-center justify-center pb-4 pt-8 text-foreground">
+        <div className="flex items-center justify-center pb-2 pt-8 text-foreground">
           <p>
             Made by{" "}
             <a href="https://mpourismaiel.com" className="px-1">
@@ -40,6 +40,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               Next.js
             </a>
             , coming to you from Cosmere!
+          </p>
+        </div>
+        <div className="flex items-center justify-center pb-4 text-foreground">
+          <p>
+            Feel free to contribute to the project on{" "}
+            <a href="https://github.com/mpourismaiel/riceyourride" className="px-1 font-bold">
+              GitHub
+            </a>. You can also submit your own rice by creating a pull request.
           </p>
         </div>
       </div>

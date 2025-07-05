@@ -24,7 +24,7 @@ const RicePick = ({ pick, isLimited }: RicePickProps) => {
             width={800}
             height={600}
             alt={pick.title}
-            className="h-[250px] md:h-[300px] w-full object-cover transition-all ease-in-out hover:object-contain"
+            className="h-[200px] md:h-[250px] w-full object-cover transition-all ease-in-out hover:object-contain"
           />
         ))}
       </div>
